@@ -175,5 +175,73 @@ public class TondeuseUtilsTest {
         assertThrows(UtilsException.class,() -> tondeuseUtils.avancer(tondeuseEntree, carteEntree));
     }
 
+       
+    @Test
+    public void init_tondeuse_e() throws ModelException, UtilsException{
+        String entree = "1 2 E";
+        Tondeuse expected = new Tondeuse(1,2, Direction.East);
+        TondeuseUtils tondeuseUtils = new TondeuseUtils();
+
+        assertEquals(expected, tondeuseUtils.initTondeuse(entree));
+    }
+
+    @Test
+    public void init_tondeuse_w() throws ModelException, UtilsException{
+        String entree = "1 2 W";
+        Tondeuse expected = new Tondeuse(1,2, Direction.West);
+        TondeuseUtils tondeuseUtils = new TondeuseUtils();
+
+        assertEquals(expected, tondeuseUtils.initTondeuse(entree));
+    }
+
+    @Test
+    public void init_tondeuse_s() throws ModelException, UtilsException{
+        String entree = "1 2 S";
+        Tondeuse expected = new Tondeuse(1,2, Direction.South);
+        TondeuseUtils tondeuseUtils = new TondeuseUtils();
+
+        assertEquals(expected, tondeuseUtils.initTondeuse(entree));
+    }
+
+    @Test
+    public void init_tondeuse_n() throws ModelException, UtilsException{
+        String entree = "1 2 N";
+        Tondeuse expected = new Tondeuse(1,2, Direction.North);
+        TondeuseUtils tondeuseUtils = new TondeuseUtils();
+
+        assertEquals(expected, tondeuseUtils.initTondeuse(entree));
+    }
+
+    @Test
+    public void init_tondeuse_mauvaise_direction() throws ModelException, UtilsException{
+        String entree = "1 2 T";
+        TondeuseUtils tondeuseUtils = new TondeuseUtils();
+
+        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree));
+    }
+
+    @Test
+    public void init_tondeuse_mauvaise_taille() throws ModelException, UtilsException{
+        String entree = "1 2 E 2";
+        TondeuseUtils tondeuseUtils = new TondeuseUtils();
+
+        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree));
+    }
+
+    @Test
+    public void init_tondeuse_mauvaise_coordonnees_2() throws ModelException, UtilsException{
+        String entree = "1 E E";
+        TondeuseUtils tondeuseUtils = new TondeuseUtils();
+
+        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree));
+    }
+
+    @Test
+    public void init_tondeuse_mauvaise_coordonnees_1() throws ModelException, UtilsException{
+        String entree = "E 2 E";
+        TondeuseUtils tondeuseUtils = new TondeuseUtils();
+
+        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree));
+    }
 
 }

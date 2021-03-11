@@ -4,8 +4,12 @@ import com.excilys.tondeuse.exception.ModelException;
 import com.excilys.tondeuse.exception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
 import com.excilys.tondeuse.modele.Direction;
+import com.excilys.tondeuse.modele.Point;
 import com.excilys.tondeuse.modele.Tondeuse;
 
+/**
+ * Gère tout les mouvements possible d'une Tondeuse
+ */
 public class TondeuseUtils {
 
     /**
@@ -150,6 +154,23 @@ public class TondeuseUtils {
             throw new UtilsException(e.getMessage());
         }
     }
+
+    /**
+     * Initialise et retourne une tondeuse correspondant à la ligne rentrée
+     * @param line la ligne contenant les informations de la tondeuse
+     * @return la tondeuse correspondant aux informations
+     * @throws UtilsException les informations sont malformés
+     */
+    public Tondeuse initTondeuse(String line) throws UtilsException{
+        String[] infos = line.split(" ");
+        if (infos.length != 3){
+            throw new UtilsException("la ligne ne possède pas 2 coordonnées et une direction");
+        }
+        Point coordonnees = new PointUtils().stringToPoint(infos);
+        Direction direction = new DirectionUtils().stringToDirection(infos[2]);
+            return new Tondeuse(coordonnees,direction);
+    }
+
     
 
 }

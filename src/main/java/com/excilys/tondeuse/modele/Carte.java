@@ -65,9 +65,6 @@ public class Carte {
         this.hauteur = hauteur;
     }
 
-    public Carte() {
-    }
-
     @Override
     public boolean equals(Object o) {
         return EqualsBuilder.reflectionEquals(this, o);
@@ -78,10 +75,22 @@ public class Carte {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
-    public Carte(int longueur, int hauteur) {
+    public Carte(int longueur, int hauteur) throws ModelException {
+        if (longueur < 0){
+            throw new ModelException("la carte ne peut pas avoir une longueur negative !");
+        }
+        if ( hauteur < 0){
+            throw new ModelException("la carte ne peut pas avoir une hauteur negative !");
+        }
         this.tondeuses = new ArrayList<>();
         this.longueur = longueur;
         this.hauteur = hauteur;
+    }
+
+    public Carte(Point point){
+        this.tondeuses = new ArrayList<>();
+        this.longueur = point.getX();
+        this.hauteur = point.getY();
     }
     
 

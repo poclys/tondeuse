@@ -36,36 +36,5 @@ public class IOUtilsTest {
         System.setOut(orinalOut);
     }
 
-    @Test
-    public void init_carte() throws UtilsException{
-        String entree = "2 50";
-        Carte expected = new Carte(2,50);
-        IOUtils ioUtils = new IOUtils();
-
-        assertEquals(expected, ioUtils.initCarte(entree));
-    }
-
-    @Test
-    public void init_carte_trop_de_coordonnees() throws UtilsException {
-        String entree = "2 5 4";
-        IOUtils ioUtils = new IOUtils();
-
-        assertThrows(UtilsException.class,() -> ioUtils.initCarte(entree));
-    }
-
-    @Test
-    public void init_carte_pas_assez_de_coordonnees() throws UtilsException {
-        String entree = "2 ";
-        IOUtils ioUtils = new IOUtils();
-
-        assertThrows(UtilsException.class,() -> ioUtils.initCarte(entree));
-    }
-
-    @Test
-    public void init_carte_pas_de_coordonnees() throws UtilsException {
-        String entree = "2 ze";
-        IOUtils ioUtils = new IOUtils();
-
-        assertThrows(UtilsException.class,() -> ioUtils.initCarte(entree));
-    }
+ 
 }
