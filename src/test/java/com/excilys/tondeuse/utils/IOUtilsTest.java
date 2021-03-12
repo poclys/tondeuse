@@ -97,7 +97,7 @@ class IOUtilsTest {
   }
 
   @Test
-  public void lecture_deplacement_a() throws ModelException, UtilsException {
+  void lecture_deplacement_a() throws ModelException, UtilsException {
     Tondeuse tondeuse = new Tondeuse(1, 2, Direction.NORTH);
     String line = "A";
     Carte carte = new Carte(4, 4);
@@ -117,7 +117,7 @@ class IOUtilsTest {
   }
 
   @Test
-  public void lecture_deplacement_a_impossible()
+  void lecture_deplacement_a_impossible()
     throws ModelException, UtilsException {
     Tondeuse tondeuse = new Tondeuse(1, 2, Direction.NORTH);
     String line = "A";
@@ -130,7 +130,7 @@ class IOUtilsTest {
   }
 
   @Test
-  public void lecture_deplacement_d()
+  void lecture_deplacement_d()
     throws ModelException, UtilsException {
     Tondeuse tondeuse = new Tondeuse(1, 2, Direction.NORTH);
     String line = "D";
@@ -151,7 +151,7 @@ class IOUtilsTest {
   }
 
   @Test
-  public void lecture_deplacement_autre()
+  void lecture_deplacement_autre()
     throws ModelException, UtilsException {
     Tondeuse tondeuse = new Tondeuse(1, 2, Direction.NORTH);
     String line = "Z";

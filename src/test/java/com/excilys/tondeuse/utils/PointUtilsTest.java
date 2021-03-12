@@ -13,13 +13,13 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class PointUtilsTest {
+class PointUtilsTest {
 
     @InjectMocks
     PointUtils pointUtils;
     
     @Test
-    public void string_to_point() throws UtilsException, ModelException{
+    void string_to_point() throws UtilsException, ModelException{
         String[] entree = {"1","2"};
         Point expected = new Point(1,2);
 
@@ -30,7 +30,7 @@ public class PointUtilsTest {
     }
 
     @Test
-    public void string_to_point_negative() throws UtilsException, ModelException{
+    void string_to_point_negative() throws UtilsException, ModelException{
         String[] entree = {"1","-2"};
 
         assertThrows(UtilsException.class,() -> pointUtils.stringToPoint(entree));
@@ -38,7 +38,7 @@ public class PointUtilsTest {
     }
 
     @Test
-    public void string_to_point_not_integer() throws UtilsException, ModelException{
+    void string_to_point_not_integer() throws UtilsException, ModelException{
         String[] entree = {"1","E"};
 
         assertThrows(UtilsException.class,() -> pointUtils.stringToPoint(entree));

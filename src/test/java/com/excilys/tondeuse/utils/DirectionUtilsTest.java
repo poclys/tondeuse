@@ -12,13 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class DirectionUtilsTest {
+class DirectionUtilsTest {
     
     @InjectMocks
     DirectionUtils directionUtils;
 
     @Test
-    public void string_to_direction_e() throws UtilsException{
+    void string_to_direction_e() throws UtilsException{
         String entree = "E";
         Direction expected = Direction.EAST;
 
@@ -28,7 +28,7 @@ public class DirectionUtilsTest {
     }
 
     @Test
-    public void string_to_direction_s() throws UtilsException{
+    void string_to_direction_s() throws UtilsException{
         String entree = "S";
         Direction expected = Direction.SOUTH;
 
@@ -38,7 +38,7 @@ public class DirectionUtilsTest {
     }
 
     @Test
-    public void string_to_direction_w() throws UtilsException{
+    void string_to_direction_w() throws UtilsException{
         String entree = "W";
         Direction expected = Direction.WEST;
 
@@ -48,7 +48,7 @@ public class DirectionUtilsTest {
     }
 
     @Test
-    public void string_to_direction_n() throws UtilsException{
+    void string_to_direction_n() throws UtilsException{
         String entree = "N";
         Direction expected = Direction.NORTH;
 
@@ -58,7 +58,7 @@ public class DirectionUtilsTest {
     }
 
     @Test
-    public void string_to_direction_other() throws UtilsException{
+    void string_to_direction_other() throws UtilsException{
         String entree = "A";
 
         assertThrows(UtilsException.class,() -> directionUtils.stringToDirection(entree));
