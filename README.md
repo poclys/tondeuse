@@ -34,6 +34,9 @@ On y trouve aussi l'énumération Menu qui permet de supprimer les Magic Numbers
 
 ## Tests
 Tout les tests sont unitaires désormais.
+Sur Eclipse on voit que le projet a atteint les 75% de Coverage, il manque principalement le coverage au niveau de la CLI.
+
+![Tests Eclipse](readMe/testsCouverture.jpg)
 
 ## Sonar
 Le projet a un plugin sonar. Pour l'utiliser il faut installer un serveur sonar sur votre machine, si vous avez docker :
