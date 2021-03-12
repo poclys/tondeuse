@@ -9,9 +9,9 @@ import com.excilys.tondeuse.modele.Carte;
 
 import org.junit.jupiter.api.Test;
 
-public class CarteUtilsTest {
+class CarteUtilsTest {
     @Test
-    public void init_carte() throws UtilsException, ModelException{
+    void init_carte() throws UtilsException, ModelException{
         String entree = "2 50";
         Carte expected = new Carte(2,50);
         CarteUtils carteUtils = new CarteUtils();
@@ -20,7 +20,7 @@ public class CarteUtilsTest {
     }
 
     @Test
-    public void init_carte_trop_de_coordonnees() throws UtilsException {
+    void init_carte_trop_de_coordonnees() throws UtilsException {
         String entree = "2 5 4";
         CarteUtils carteUtils = new CarteUtils();
 
@@ -28,7 +28,7 @@ public class CarteUtilsTest {
     }
 
     @Test
-    public void init_carte_pas_assez_de_coordonnees() throws UtilsException {
+    void init_carte_pas_assez_de_coordonnees() throws UtilsException {
         String entree = "2 ";
         CarteUtils carteUtils = new CarteUtils();
 
@@ -36,7 +36,7 @@ public class CarteUtilsTest {
     }
 
     @Test
-    public void init_carte_pas_de_coordonnees() throws UtilsException {
+    void init_carte_pas_de_coordonnees() throws UtilsException {
         String entree = "2 ze";
         CarteUtils carteUtils = new CarteUtils();
 
