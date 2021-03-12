@@ -172,7 +172,7 @@ public class CLI {
    * @throws UtilsException remonte les erreurs
    */
   private void ouvertureDuFichierLectureAffichage(String fichierPath)
-    throws FileNotFoundException, IOException, UtilsException {
+    throws IOException, UtilsException {
     
     FileInputStream fis = new FileInputStream(fichierPath);
     InputStream targetStream = fis;

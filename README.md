@@ -19,7 +19,7 @@ Ce projet utilise Maven, il est donc nécessaire d'avoir Maven installé sur sa 
 Une version Java 8 ou plus est aussi nécessaire.
 
 ## Packaging
-Le projet a trois Packages.
+Le projet a quatre Packages.
 ### Modele
 Contient les modèles de base du projet.
 Un point correspond à deux coordonnées.
@@ -28,8 +28,9 @@ Il n'y a aucune intelligence dans les modèles hormis la gestion de nombre néga
 Contient toutes les Exception du projet. J'ai laissé uniquement le constructeur avec un message pour forcer son utilisation.
 ### Utils
 Contient toute l'intelligence du projet. Leur usage est indiqué en Javadoc.
-### Autre
-J'ai laissé sans package la classe main. Elle pourrait aussi passé dans un package CLI.
+### CLI
+Dans le package CLI on a la commande line interpreter qui communique avec l'utilisateur.
+On y trouve aussi l'énumération Menu qui permet de supprimer les Magic Numbers lié aux choix de l'utilisateur. 
 
 ## Tests
 Les tests ne sont pas unitaire pour le moment.
@@ -44,10 +45,11 @@ Puis configurer le ( admin admin lors de la première installation, puis ajout d
 
     mvn sonar:sonar -Dsonar.projectKey=excilys:tondeuse -Dsonar.host.url=http://localhost:9000 -Dsonar.login=votre-tocken
 
-On a très peu de code smells, la plupart sont dû à l'affichage dans la console des résultats qui ne sont donc pas des log.
+Les codes smells sont lié à l'usage de System.out.println dans la CLI. Pour remonter une erreur aux admins, on passe par des loggers.
 
 ## Logs
 
-On a des log dans un fichier
-
+On a des logs dans le dossier /logs
+Pour le moment on log uniquement l'erreur qui survient quand la tondeuse sort de la carte, car cette erreur n'est pas
+remonté à l'utilisateur et est ignoré lors du fonctionnement du programme
 
