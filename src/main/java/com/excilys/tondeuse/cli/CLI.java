@@ -1,5 +1,6 @@
 package com.excilys.tondeuse.cli;
 
+import com.excilys.tondeuse.AppConfiguration;
 import com.excilys.tondeuse.exception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
 import com.excilys.tondeuse.modele.Tondeuse;
@@ -11,8 +12,23 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class CLI {
+
+  CarteUtils carteUtils;
+  IOUtils ioUtils;
+  TondeuseUtils tondeuseUtils;
+
+  public CLI() {
+    ApplicationContext context = new AnnotationConfigApplicationContext(
+      AppConfiguration.class
+    );
+    this.carteUtils = context.getBean(CarteUtils.class);
+    this.ioUtils = context.getBean(IOUtils.class);
+    this.tondeuseUtils = context.getBean(TondeuseUtils.class);
+  }
 
   public static void main(String[] args) {
     CLI cli = new CLI();
@@ -21,7 +37,7 @@ public class CLI {
     boolean stopTheProgram = false;
     while (!stopTheProgram) {
       Menu choice = cli.menu(sin);
-      if (choice == null){
+      if (choice == null) {
         choice = Menu.RIEN;
       }
       stopTheProgram = menuSwitch(cli, sin, stopTheProgram, choice);
@@ -37,26 +53,31 @@ public class CLI {
    * @param choice le choix de l'utilisateur
    * @return si le programme doit s'arreter ou non
    */
-  private static boolean menuSwitch(CLI cli, Scanner sin, boolean stopTheProgram, Menu choice) {
+  private static boolean menuSwitch(
+    CLI cli,
+    Scanner sin,
+    boolean stopTheProgram,
+    Menu choice
+  ) {
     switch (choice) {
       case FICHIER_PATH:
         cli.choixDuFichier(sin);
         break;
       case DATA:
-      menuData(cli, sin);
+        cli.menuData(sin);
         break;
       case FICHIER_DEFAULT:
-      menuFichierDefault(cli);
+        cli.menuFichierDefault();
         break;
       case STOP_PROGRAMME:
-      stopTheProgram = menuStopProgramme();
+        stopTheProgram = cli.menuStopProgramme();
         break;
       default:
     }
     return stopTheProgram;
   }
 
-  private static boolean menuStopProgramme() {
+  private boolean menuStopProgramme() {
     boolean stopTheProgram;
     System.out.println(
       "Arret du programme, merci " +
@@ -66,18 +87,18 @@ public class CLI {
     return stopTheProgram;
   }
 
-  private static void menuFichierDefault(CLI cli) {
+  private void menuFichierDefault() {
     try {
-      cli.ouvertureDuFichierLectureAffichage("src/main/resources/sample.txt");
+      this.ouvertureDuFichierLectureAffichage("src/main/resources/sample.txt");
     } catch (IOException | UtilsException e) {
       System.out.println(e.getMessage());
     }
   }
 
-  private static void menuData(CLI cli, Scanner sin) {
+  private void menuData(Scanner sin) {
     try {
-      Carte carte = cli.readAndUseData(sin);
-      new IOUtils().afficherSortie(carte);
+      Carte carte = this.readAndUseData(sin);
+      ioUtils.afficherSortie(carte);
     } catch (UtilsException e) {
       System.out.println(e.getMessage());
     }
@@ -119,7 +140,7 @@ public class CLI {
   public Carte readAndUseData(Scanner sin) throws UtilsException {
     System.out.println("Entrez les coordonnées de la case supérieur droite :");
     String initialisationCarte = sin.nextLine();
-    Carte result = new CarteUtils().initCarte(initialisationCarte);
+    Carte result = carteUtils.initCarte(initialisationCarte);
 
     System.out.println(
       "Entrez les coordonnées initiale de la tondeuse " +
@@ -132,10 +153,15 @@ public class CLI {
     return result;
   }
 
-  private String lectureTondeuseEtDeplacement(Scanner sin, Carte result, String position) throws UtilsException {
-    Tondeuse tondeuse = new TondeuseUtils().initTondeuse(position);
+  private String lectureTondeuseEtDeplacement(
+    Scanner sin,
+    Carte result,
+    String position
+  )
+    throws UtilsException {
+    Tondeuse tondeuse = tondeuseUtils.initTondeuse(position);
     String deplacement = sin.nextLine();
-    new IOUtils().lectureDeplacement(deplacement, tondeuse, result);
+    ioUtils.lectureDeplacement(deplacement, tondeuse, result);
     result.getTondeuses().add(tondeuse);
     System.out.println(
       "Entrez les coordonnées initiale de la tondeuse " +
@@ -173,10 +199,8 @@ public class CLI {
    */
   private void ouvertureDuFichierLectureAffichage(String fichierPath)
     throws IOException, UtilsException {
-    
     FileInputStream fis = new FileInputStream(fichierPath);
     InputStream targetStream = fis;
-    IOUtils ioUtils = new IOUtils();
     Carte carte = ioUtils.readFile(targetStream);
     ioUtils.afficherSortie(carte);
   }

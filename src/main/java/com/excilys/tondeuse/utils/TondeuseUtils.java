@@ -7,11 +7,23 @@ import com.excilys.tondeuse.modele.Direction;
 import com.excilys.tondeuse.modele.Point;
 import com.excilys.tondeuse.modele.Tondeuse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 /**
  * Gère tout les mouvements possible d'une Tondeuse ainsi que le traitement de
  * String pour définir un mouvement ou une initialisation de Tondeuse.
  */
+@Service
 public class TondeuseUtils {
+  PointUtils pointUtils;
+  DirectionUtils directionUtils;
+
+  @Autowired
+  public TondeuseUtils(PointUtils pointUtils, DirectionUtils directionUtils){
+    this.pointUtils = pointUtils;
+    this.directionUtils = directionUtils;
+  }
 
   /**
    * Fait tourner vers la gauche la tondeuse.
@@ -195,8 +207,8 @@ public class TondeuseUtils {
         "la ligne ne possède pas 2 coordonnées et une direction"
       );
     }
-    Point coordonnees = new PointUtils().stringToPoint(infos);
-    Direction direction = new DirectionUtils().stringToDirection(infos[2]);
+    Point coordonnees = pointUtils.stringToPoint(infos);
+    Direction direction = directionUtils.stringToDirection(infos[2]);
     return new Tondeuse(coordonnees, direction);
   }
 }

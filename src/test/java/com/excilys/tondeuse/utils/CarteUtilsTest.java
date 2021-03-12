@@ -2,45 +2,59 @@ package com.excilys.tondeuse.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 import com.excilys.tondeuse.exception.ModelException;
 import com.excilys.tondeuse.exception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
+import com.excilys.tondeuse.modele.Point;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class CarteUtilsTest {
-    @Test
-    void init_carte() throws UtilsException, ModelException{
-        String entree = "2 50";
-        Carte expected = new Carte(2,50);
-        CarteUtils carteUtils = new CarteUtils();
 
-        assertEquals(expected, carteUtils.initCarte(entree));
-    }
+  @InjectMocks
+  CarteUtils carteUtils;
 
-    @Test
-    void init_carte_trop_de_coordonnees() throws UtilsException {
-        String entree = "2 5 4";
-        CarteUtils carteUtils = new CarteUtils();
+  @Mock
+  PointUtils pointUtils;
 
-        assertThrows(UtilsException.class,() -> carteUtils.initCarte(entree));
-    }
+  @Test
+  void init_carte() throws UtilsException, ModelException {
+    String entree = "2 50";
+    Carte expected = new Carte(2, 50);
+    String[] forPointUtils = {"2","50"};
+    when(pointUtils.stringToPoint(forPointUtils)).thenReturn(new Point(2,50));
 
-    @Test
-    void init_carte_pas_assez_de_coordonnees() throws UtilsException {
-        String entree = "2 ";
-        CarteUtils carteUtils = new CarteUtils();
+    assertEquals(expected, carteUtils.initCarte(entree));
+  }
 
-        assertThrows(UtilsException.class,() -> carteUtils.initCarte(entree));
-    }
+  @Test
+  void init_carte_trop_de_coordonnees() throws UtilsException {
+    String entree = "2 5 4";
 
-    @Test
-    void init_carte_pas_de_coordonnees() throws UtilsException {
-        String entree = "2 ze";
-        CarteUtils carteUtils = new CarteUtils();
+    assertThrows(UtilsException.class, () -> carteUtils.initCarte(entree));
+  }
 
-        assertThrows(UtilsException.class,() -> carteUtils.initCarte(entree));
-    }
+  @Test
+  void init_carte_pas_assez_de_coordonnees() throws UtilsException {
+    String entree = "2 ";
 
+    assertThrows(UtilsException.class, () -> carteUtils.initCarte(entree));
+  }
+
+  @Test
+  void init_carte_pas_de_coordonnees() throws UtilsException {
+    String entree = "2 ze";
+
+    String[] forPointUtils = {"2","ze"};
+    when(pointUtils.stringToPoint(forPointUtils)).thenThrow(new UtilsException("erreur attendu"));
+
+    assertThrows(UtilsException.class, () -> carteUtils.initCarte(entree));
+  }
 }

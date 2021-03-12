@@ -4,9 +4,12 @@ import com.excilys.tondeuse.exception.ModelException;
 import com.excilys.tondeuse.exception.UtilsException;
 import com.excilys.tondeuse.modele.Point;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Gère le traitement des Strings pour obtenir des points.
  */
+@Service
 public class PointUtils {
 
   /**

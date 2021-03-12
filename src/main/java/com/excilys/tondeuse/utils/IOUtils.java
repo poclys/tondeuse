@@ -6,6 +6,7 @@ import com.excilys.tondeuse.modele.Tondeuse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +16,15 @@ import java.io.InputStreamReader;
 /**
  * Gère tout ce qui concerne la lecture et l'écriture.
  */
+@Service
 public class IOUtils {
+  TondeuseUtils tondeuseUtils;
+  CarteUtils carteUtils;
+
+  public IOUtils(TondeuseUtils tondeuseUtils, CarteUtils carteUtils){
+    this.tondeuseUtils = tondeuseUtils;
+    this.carteUtils = carteUtils;
+  }
 
   private static final Logger logger = LogManager.getLogger(IOUtils.class);
 
@@ -72,8 +81,7 @@ public class IOUtils {
     String initialisationTondeuse;
     try {
       while ((initialisationTondeuse = bufferedReader.readLine()) != null) {
-        Tondeuse tondeuse = new TondeuseUtils()
-        .initTondeuse(initialisationTondeuse);
+        Tondeuse tondeuse = tondeuseUtils.initTondeuse(initialisationTondeuse);
         String deplacement = bufferedReader.readLine();
         lectureDeplacement(deplacement, tondeuse, carte);
         carte.getTondeuses().add(tondeuse);
@@ -99,7 +107,7 @@ public class IOUtils {
     throws UtilsException {
     try {
       String initialisationCarte = bufferedReader.readLine();
-      return new CarteUtils().initCarte(initialisationCarte);
+      return carteUtils.initCarte(initialisationCarte);
     } catch (UtilsException | IOException e) {
       throw new UtilsException(
         "Une erreur est survenu lors de" +
@@ -124,7 +132,6 @@ public class IOUtils {
     final Carte carte
   )
     throws UtilsException {
-    TondeuseUtils tondeuseUtils = new TondeuseUtils();
     for (int i = 0; i < line.length(); i++) {
       char lettre = line.charAt(i);
       switch (lettre) {

@@ -3,10 +3,20 @@ package com.excilys.tondeuse.utils;
 import com.excilys.tondeuse.exception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 /**
  * Gère le traitement des Strings pour initialiser les Cartes.
  */
+@Service
 public class CarteUtils {
+  PointUtils pointUtils;
+
+  @Autowired
+  public CarteUtils(PointUtils pointUtils){
+    this.pointUtils = pointUtils;
+  }
 
   /**
    * Initialise et retourne la carte correspondant au coordonnées de la case du
@@ -21,6 +31,6 @@ public class CarteUtils {
     if (size.length != 2) {
       throw new UtilsException("la ligne ne possède pas 2 coordonnées");
     }
-    return new Carte(new PointUtils().stringToPoint(size));
+    return new Carte(pointUtils.stringToPoint(size));
   }
 }

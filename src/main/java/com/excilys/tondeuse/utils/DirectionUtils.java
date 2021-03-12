@@ -3,9 +3,12 @@ package com.excilys.tondeuse.utils;
 import com.excilys.tondeuse.exception.UtilsException;
 import com.excilys.tondeuse.modele.Direction;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Gestion des Strings pour obtenir une Direction.
  */
+@Service
 public class DirectionUtils {
 
   /**

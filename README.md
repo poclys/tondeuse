@@ -33,7 +33,7 @@ Dans le package CLI on a la commande line interpreter qui communique avec l'util
 On y trouve aussi l'énumération Menu qui permet de supprimer les Magic Numbers lié aux choix de l'utilisateur. 
 
 ## Tests
-Les tests ne sont pas unitaire pour le moment.
+Tout les tests sont unitaires désormais.
 
 ## Sonar
 Le projet a un plugin sonar. Pour l'utiliser il faut installer un serveur sonar sur votre machine, si vous avez docker :
@@ -52,4 +52,8 @@ Les codes smells sont lié à l'usage de System.out.println dans la CLI. Pour re
 On a des logs dans le dossier /logs
 Pour le moment on log uniquement l'erreur qui survient quand la tondeuse sort de la carte, car cette erreur n'est pas
 remonté à l'utilisateur et est ignoré lors du fonctionnement du programme
+
+## Spring
+
+Spring a été utilisé dans ce projet pour faire de l'Injection de Dépendance et facilement utiliser les Mock dans les tests.
 
