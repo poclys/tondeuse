@@ -1,14 +1,17 @@
 package com.excilys.tondeuse.utils;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import com.excilys.tondeuse.exception.ModelException;
 import com.excilys.tondeuse.exception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
 import com.excilys.tondeuse.modele.Direction;
+import com.excilys.tondeuse.modele.Point;
 import com.excilys.tondeuse.modele.Tondeuse;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -56,10 +59,23 @@ class IOUtilsTest {
       )
       .when(tondeuseUtils)
       .tournerAGauche(new Tondeuse(1, 2, Direction.NORTH));
-    
-    
+
     Carte result = ioUtils.readFile(targetStream);
     assertEquals(expected, result);
+  }
+
+  @Test
+  void read_file_mauvaise_carte()
+    throws IOException, UtilsException, ModelException {
+    FileInputStream fis = new FileInputStream("src/test/resources/sample.txt");
+    InputStream targetStream = fis;
+    Carte expected = new Carte(5, 5);
+    Tondeuse tondeuse1 = new Tondeuse(1, 2, Direction.WEST);
+    expected.getTondeuses().add(tondeuse1);
+    String initCarte = "5 5";
+    when(carteUtils.initCarte(initCarte)).thenThrow(new UtilsException(""));
+
+    assertThrows(UtilsException.class, () -> ioUtils.readFile(targetStream));
   }
 
   @Test
@@ -78,5 +94,68 @@ class IOUtilsTest {
     assertEquals("1 2 W\n2 0 N\n", outContent.toString());
 
     System.setOut(orinalOut);
+  }
+
+  @Test
+  public void lecture_deplacement_a() throws ModelException, UtilsException {
+    Tondeuse tondeuse = new Tondeuse(1, 2, Direction.NORTH);
+    String line = "A";
+    Carte carte = new Carte(4, 4);
+    doAnswer(
+        invocation -> {
+          Object[] args = invocation.getArguments();
+          ((Tondeuse) args[0]).setCoordonnees(new Point(1, 3));
+          return null;
+        }
+      )
+      .when(tondeuseUtils)
+      .avancer(new Tondeuse(1, 2, Direction.NORTH), carte);
+    Tondeuse expected = new Tondeuse(1, 3, Direction.NORTH);
+
+    ioUtils.lectureDeplacement(line, tondeuse, carte);
+    assertEquals(expected, tondeuse);
+  }
+
+  @Test
+  public void lecture_deplacement_a_impossible()
+    throws ModelException, UtilsException {
+    Tondeuse tondeuse = new Tondeuse(1, 2, Direction.NORTH);
+    String line = "A";
+    Carte carte = new Carte(2, 2);
+    doThrow(new UtilsException("msg"))
+      .when(tondeuseUtils)
+      .avancer(new Tondeuse(1, 2, Direction.NORTH), carte);
+
+    assertDoesNotThrow(() -> ioUtils.lectureDeplacement(line, tondeuse, carte));
+  }
+
+  @Test
+  public void lecture_deplacement_d()
+    throws ModelException, UtilsException {
+    Tondeuse tondeuse = new Tondeuse(1, 2, Direction.NORTH);
+    String line = "D";
+    Carte carte = new Carte(2, 2);
+    doAnswer(
+        invocation -> {
+          Object[] args = invocation.getArguments();
+          ((Tondeuse) args[0]).setDirection(Direction.EAST);
+          return null;
+        }
+      )
+      .when(tondeuseUtils)
+      .tournerADroite(new Tondeuse(1, 2, Direction.NORTH));
+    Tondeuse expected = new Tondeuse(1, 2, Direction.EAST);
+
+    ioUtils.lectureDeplacement(line, tondeuse, carte);
+    assertEquals(expected, tondeuse);
+  }
+
+  @Test
+  public void lecture_deplacement_autre()
+    throws ModelException, UtilsException {
+    Tondeuse tondeuse = new Tondeuse(1, 2, Direction.NORTH);
+    String line = "Z";
+    Carte carte = new Carte(2, 2);
+    assertThrows(UtilsException.class,() -> ioUtils.lectureDeplacement(line, tondeuse, carte));
   }
 }
