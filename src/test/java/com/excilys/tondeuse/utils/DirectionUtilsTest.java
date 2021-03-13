@@ -3,7 +3,7 @@ package com.excilys.tondeuse.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
 import com.excilys.tondeuse.modele.Direction;
 
 import org.junit.jupiter.api.Test;

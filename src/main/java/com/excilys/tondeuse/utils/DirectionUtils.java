@@ -1,6 +1,7 @@
 package com.excilys.tondeuse.utils;
 
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
+import com.excilys.tondeuse.exception.utilsexception.DirectionParsingException;
 import com.excilys.tondeuse.modele.Direction;
 
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class DirectionUtils {
    * @throws UtilsException la String en entrée ne
    * correspond pas à une direction.
    */
-  public Direction stringToDirection(final String direction)
+  public Direction stringToDirection(String direction)
     throws UtilsException {
     switch (direction) {
       case "E":
@@ -31,9 +32,7 @@ public class DirectionUtils {
       case "S":
         return Direction.SOUTH;
       default:
-        throw new UtilsException(
-          "la direction de la tondeuse est incorrecte !"
-        );
+        throw new DirectionParsingException();
     }
   }
 }

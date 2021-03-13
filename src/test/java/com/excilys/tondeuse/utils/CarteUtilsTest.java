@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.excilys.tondeuse.exception.ModelException;
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.modelexception.ModelException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
 import com.excilys.tondeuse.modele.Point;
 

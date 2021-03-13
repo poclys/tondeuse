@@ -1,11 +1,11 @@
-package com.excilys.tondeuse.exception;
+package com.excilys.tondeuse.exception.utilsexception;
 
 /**
  * L'exception des Utils.
  */
 public class UtilsException extends Exception {
 
-  public UtilsException(final String msg) {
+  public UtilsException(String msg) {
     super(msg);
   }
 }

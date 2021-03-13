@@ -1,7 +1,7 @@
 package com.excilys.tondeuse.cli;
 
 import com.excilys.tondeuse.AppConfiguration;
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
 import com.excilys.tondeuse.modele.Tondeuse;
 import com.excilys.tondeuse.utils.CarteUtils;
@@ -122,8 +122,11 @@ public class CLI {
     System.out.println("4 - Arreter le programme");
     System.out.println("Quel est votre choix  ?");
     Menu result;
-
-    result = Menu.valueOf(Integer.parseInt(sin.nextLine()));
+    try {
+      result = Menu.valueOf(Integer.parseInt(sin.nextLine()));
+    } catch (NumberFormatException e) {
+      result = Menu.RIEN;
+    }
     return result;
   }
 
@@ -155,14 +158,14 @@ public class CLI {
 
   private String lectureTondeuseEtDeplacement(
     Scanner sin,
-    Carte result,
+    Carte carte,
     String position
   )
     throws UtilsException {
-    Tondeuse tondeuse = tondeuseUtils.initTondeuse(position);
+    Tondeuse tondeuse = tondeuseUtils.initTondeuse(position, carte);
     String deplacement = sin.nextLine();
-    ioUtils.lectureDeplacement(deplacement, tondeuse, result);
-    result.getTondeuses().add(tondeuse);
+    ioUtils.lectureDeplacement(deplacement, tondeuse, carte);
+    carte.getTondeuses().add(tondeuse);
     System.out.println(
       "Entrez les coordonnées initiale de la tondeuse " +
       "( laissez vide si plus de tondeuse )"

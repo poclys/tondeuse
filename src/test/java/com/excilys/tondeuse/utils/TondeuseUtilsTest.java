@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.excilys.tondeuse.exception.ModelException;
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.modelexception.ModelException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
 import com.excilys.tondeuse.modele.Direction;
 import com.excilys.tondeuse.modele.Point;
@@ -183,11 +183,12 @@ class TondeuseUtilsTest {
         String entree = "1 2 E";
         Tondeuse expected = new Tondeuse(1,2, Direction.EAST);
         String[] forPointUtils = {"1","2","E"};
+        Carte carte = new Carte(5,5);
 
         when(pointUtils.stringToPoint(forPointUtils)).thenReturn(new Point(1,2));
         when(directionUtils.stringToDirection("E")).thenReturn(Direction.EAST);
 
-        assertEquals(expected, tondeuseUtils.initTondeuse(entree));
+        assertEquals(expected, tondeuseUtils.initTondeuse(entree, carte));
     }
 
     @Test
@@ -195,11 +196,12 @@ class TondeuseUtilsTest {
         String entree = "1 2 W";
         Tondeuse expected = new Tondeuse(1,2, Direction.WEST);
         String[] forPointUtils = {"1","2","W"};
+        Carte carte = new Carte(5,5);
 
         when(pointUtils.stringToPoint(forPointUtils)).thenReturn(new Point(1,2));
         when(directionUtils.stringToDirection("W")).thenReturn(Direction.WEST);
 
-        assertEquals(expected, tondeuseUtils.initTondeuse(entree));
+        assertEquals(expected, tondeuseUtils.initTondeuse(entree, carte));
     }
 
     @Test
@@ -207,11 +209,12 @@ class TondeuseUtilsTest {
         String entree = "1 2 S";
         Tondeuse expected = new Tondeuse(1,2, Direction.SOUTH);
         String[] forPointUtils = {"1","2","S"};
+        Carte carte = new Carte(5,5);
 
         when(pointUtils.stringToPoint(forPointUtils)).thenReturn(new Point(1,2));
         when(directionUtils.stringToDirection("S")).thenReturn(Direction.SOUTH);
 
-        assertEquals(expected, tondeuseUtils.initTondeuse(entree));
+        assertEquals(expected, tondeuseUtils.initTondeuse(entree, carte));
     }
 
     @Test
@@ -219,49 +222,54 @@ class TondeuseUtilsTest {
         String entree = "1 2 N";
         Tondeuse expected = new Tondeuse(1,2, Direction.NORTH);
         String[] forPointUtils = {"1","2","N"};
+        Carte carte = new Carte(5,5);
 
         when(pointUtils.stringToPoint(forPointUtils)).thenReturn(new Point(1,2));
         when(directionUtils.stringToDirection("N")).thenReturn(Direction.NORTH);
 
-        assertEquals(expected, tondeuseUtils.initTondeuse(entree));
+        assertEquals(expected, tondeuseUtils.initTondeuse(entree, carte));
     }
 
     @Test
     void init_tondeuse_mauvaise_direction() throws ModelException, UtilsException{
         String entree = "1 2 T";
         String[] forPointUtils = {"1","2","T"};
+        Carte carte = new Carte(5,5);
 
         when(pointUtils.stringToPoint(forPointUtils)).thenReturn(new Point(1,2));
         when(directionUtils.stringToDirection("T")).thenThrow(new UtilsException("msg"));
 
-        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree));
+        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree, carte));
     }
 
     @Test
     void init_tondeuse_mauvaise_taille() throws ModelException, UtilsException{
         String entree = "1 2 E 2";
+        Carte carte = new Carte(5,5);
 
-        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree));
+        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree, carte));
     }
 
     @Test
     void init_tondeuse_mauvaise_coordonnees_2() throws ModelException, UtilsException{
         String entree = "1 E E";
         String[] forPointUtils = {"1","E","E"};
+        Carte carte = new Carte(5,5);
 
         when(pointUtils.stringToPoint(forPointUtils)).thenThrow(new UtilsException("msg"));
 
-        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree));
+        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree, carte));
     }
 
     @Test
     void init_tondeuse_mauvaise_coordonnees_1() throws ModelException, UtilsException{
         String entree = "E 2 E";
         String[] forPointUtils = {"E","2","E"};
+        Carte carte = new Carte(5,5);
 
         when(pointUtils.stringToPoint(forPointUtils)).thenThrow(new UtilsException("msg"));
 
-        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree));
+        assertThrows(UtilsException.class,() -> tondeuseUtils.initTondeuse(entree, carte));
     }
 
 }

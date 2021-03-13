@@ -3,12 +3,12 @@ package com.excilys.tondeuse.modele;
 public enum Direction {
   NORTH("N"),
   EAST("E"),
-  WEST("W"),
-  SOUTH("S");
+  SOUTH("S"),
+  WEST("W");
 
   private String label;
 
-  private Direction(final String label) {
+  private Direction(String label) {
     this.label = label;
   }
 

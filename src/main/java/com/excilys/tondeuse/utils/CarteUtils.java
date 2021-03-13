@@ -1,6 +1,7 @@
 package com.excilys.tondeuse.utils;
 
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
+import com.excilys.tondeuse.exception.utilsexception.CarteParsingException;
 import com.excilys.tondeuse.modele.Carte;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class CarteUtils {
   public Carte initCarte(String line) throws UtilsException {
     String[] size = line.split(" ");
     if (size.length != 2) {
-      throw new UtilsException("la ligne ne possède pas 2 coordonnées");
+      throw new CarteParsingException();
     }
     return new Carte(pointUtils.stringToPoint(size));
   }

@@ -1,6 +1,8 @@
 package com.excilys.tondeuse.utils;
 
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
+import com.excilys.tondeuse.exception.utilsexception.ActionParsingException;
+import com.excilys.tondeuse.exception.utilsexception.LectureException;
 import com.excilys.tondeuse.modele.Carte;
 import com.excilys.tondeuse.modele.Tondeuse;
 
@@ -33,7 +35,7 @@ public class IOUtils {
    *
    * @param carte la carte dont on affiche le résultat
    */
-  public void afficherSortie(final Carte carte) {
+  public void afficherSortie(Carte carte) {
     for (Tondeuse tondeuse : carte.getTondeuses()) {
       System.out.println(tondeuse);
     }
@@ -49,7 +51,7 @@ public class IOUtils {
    * lecture du fichier
    * @throws UtilsException remonte les exceptions
    */
-  public Carte readFile(final InputStream inputStream)
+  public Carte readFile(InputStream inputStream)
     throws IOException, UtilsException {
     try (
       BufferedReader bufferedReader = new BufferedReader(
@@ -74,24 +76,20 @@ public class IOUtils {
    * @throws UtilsException remonte les exceptions rencontrés
    */
   private void lireDeuxLignesConcernantTondeuse(
-    final BufferedReader bufferedReader,
-    final Carte carte
+    BufferedReader bufferedReader,
+    Carte carte
   )
     throws UtilsException {
     String initialisationTondeuse;
     try {
       while ((initialisationTondeuse = bufferedReader.readLine()) != null) {
-        Tondeuse tondeuse = tondeuseUtils.initTondeuse(initialisationTondeuse);
+        Tondeuse tondeuse = tondeuseUtils.initTondeuse(initialisationTondeuse, carte);
         String deplacement = bufferedReader.readLine();
         lectureDeplacement(deplacement, tondeuse, carte);
         carte.getTondeuses().add(tondeuse);
       }
     } catch (IOException e) {
-      throw new UtilsException(
-        "Une erreur est survenu lors de" +
-        "la lecture du fichier : " +
-        e.getMessage()
-      );
+      throw new LectureException(e.getMessage());
     }
   }
 
@@ -103,17 +101,13 @@ public class IOUtils {
    * @return la carte initialisée
    * @throws UtilsException remonte les exceptions rencontrés
    */
-  private Carte lireLigneInialisationCarte(final BufferedReader bufferedReader)
+  private Carte lireLigneInialisationCarte(BufferedReader bufferedReader)
     throws UtilsException {
     try {
       String initialisationCarte = bufferedReader.readLine();
       return carteUtils.initCarte(initialisationCarte);
     } catch (UtilsException | IOException e) {
-      throw new UtilsException(
-        "Une erreur est survenu lors de" +
-        "la lecture du fichier : " +
-        e.getMessage()
-      );
+      throw new LectureException(e.getMessage());
     }
   }
 
@@ -127,9 +121,9 @@ public class IOUtils {
    * @throws UtilsException une des actions ne correspond à rien
    */
   public void lectureDeplacement(
-    final String line,
-    final Tondeuse tondeuse,
-    final Carte carte
+    String line,
+    Tondeuse tondeuse,
+    Carte carte
   )
     throws UtilsException {
     for (int i = 0; i < line.length(); i++) {
@@ -149,7 +143,7 @@ public class IOUtils {
           tondeuseUtils.tournerADroite(tondeuse);
           break;
         default:
-          throw new UtilsException("une des actions lu ne correspond à rien");
+          throw new ActionParsingException();
       }
     }
   }

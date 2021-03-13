@@ -1,7 +1,8 @@
 package com.excilys.tondeuse.utils;
 
-import com.excilys.tondeuse.exception.ModelException;
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.modelexception.ModelException;
+import com.excilys.tondeuse.exception.utilsexception.PointParsingException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
 import com.excilys.tondeuse.modele.Point;
 
 import org.springframework.stereotype.Service;
@@ -19,13 +20,11 @@ public class PointUtils {
    * @return un point
    * @throws UtilsException Si une des deux première String est mal formé
    */
-  public Point stringToPoint(final String[] infos) throws UtilsException {
+  public Point stringToPoint(String[] infos) throws UtilsException {
     try {
       return new Point(Integer.parseInt(infos[0]), Integer.parseInt(infos[1]));
     } catch (NumberFormatException e) {
-      throw new UtilsException(
-        "La ligne contenant les coordonées est mal formée"
-      );
+      throw new PointParsingException();
     } catch (ModelException e) {
       throw new UtilsException(e.getMessage());
     }

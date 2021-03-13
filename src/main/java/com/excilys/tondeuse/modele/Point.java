@@ -1,6 +1,8 @@
 package com.excilys.tondeuse.modele;
 
-import com.excilys.tondeuse.exception.ModelException;
+import com.excilys.tondeuse.exception.modelexception.HauteurNegativeException;
+import com.excilys.tondeuse.exception.modelexception.LongueurNegativeException;
+import com.excilys.tondeuse.exception.modelexception.ModelException;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -9,22 +11,18 @@ public class Point {
   private int x;
   private int y;
 
-  public Point(final int x, final int y) throws ModelException {
+  public Point(int x, int y) throws ModelException {
     if (x < 0) {
-      throw new ModelException(
-        "La position selon l'axe Ouest-Est (x) ne peut pas être négative !"
-      );
+      throw new LongueurNegativeException();
     }
     if (y < 0) {
-      throw new ModelException(
-        "La position selon l'axe Nord-Sud (y) ne peut pas être négative !"
-      );
+      throw new HauteurNegativeException();
     }
     this.x = x;
     this.y = y;
   }
 
-  public Point(final Point point) {
+  public Point(Point point) {
     this.x = point.getX();
     this.y = point.getY();
   }
@@ -33,11 +31,9 @@ public class Point {
     return x;
   }
 
-  public void setX(final int x) throws ModelException {
+  public void setX(int x) throws ModelException {
     if (x < 0) {
-      throw new ModelException(
-        "La position selon l'axe Ouest-Est (x) ne peut pas être négative !"
-      );
+      throw new LongueurNegativeException();
     }
     this.x = x;
   }
@@ -46,11 +42,9 @@ public class Point {
     return y;
   }
 
-  public void setY(final int y) throws ModelException {
+  public void setY(int y) throws ModelException {
     if (y < 0) {
-      throw new ModelException(
-        "La position selon l'axe Nord-Sud (y) ne peut pas être négative !"
-      );
+      throw new HauteurNegativeException();
     }
     this.y = y;
   }
@@ -61,7 +55,7 @@ public class Point {
   }
 
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     return EqualsBuilder.reflectionEquals(this, o);
   }
 

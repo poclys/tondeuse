@@ -7,8 +7,8 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
-import com.excilys.tondeuse.exception.ModelException;
-import com.excilys.tondeuse.exception.UtilsException;
+import com.excilys.tondeuse.exception.modelexception.ModelException;
+import com.excilys.tondeuse.exception.utilsexception.UtilsException;
 import com.excilys.tondeuse.modele.Carte;
 import com.excilys.tondeuse.modele.Direction;
 import com.excilys.tondeuse.modele.Point;
@@ -40,6 +40,7 @@ class IOUtilsTest {
   void read_file() throws IOException, UtilsException, ModelException {
     FileInputStream fis = new FileInputStream("src/test/resources/sample.txt");
     InputStream targetStream = fis;
+    Carte initiale = new Carte(5,5);
     Carte expected = new Carte(5, 5);
     Tondeuse tondeuse1 = new Tondeuse(1, 2, Direction.WEST);
     expected.getTondeuses().add(tondeuse1);
@@ -47,7 +48,7 @@ class IOUtilsTest {
     String initTondeuse1 = "1 2 N";
 
     when(carteUtils.initCarte(initCarte)).thenReturn(new Carte(5, 5));
-    when(tondeuseUtils.initTondeuse(initTondeuse1))
+    when(tondeuseUtils.initTondeuse(initTondeuse1, initiale))
       .thenReturn(new Tondeuse(1, 2, Direction.NORTH));
 
     doAnswer(

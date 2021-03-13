@@ -1,6 +1,6 @@
 package com.excilys.tondeuse.modele;
 
-import com.excilys.tondeuse.exception.ModelException;
+import com.excilys.tondeuse.exception.modelexception.ModelException;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
