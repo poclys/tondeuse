@@ -30,7 +30,7 @@ Contient toutes les Exception du projet. J'ai laissé uniquement le constructeur
 Contient toute l'intelligence du projet. Leur usage est indiqué en Javadoc.
 ### CLI
 Dans le package CLI on a la commande line interpreter qui communique avec l'utilisateur.
-On y trouve aussi l'énumération Menu qui permet de supprimer les Magic Numbers lié aux choix de l'utilisateur. 
+On y trouve aussi l'énumération Menu qui permet de supprimer les Magic Numbers liés aux choix de l'utilisateur. 
 
 ## Tests
 Tout les tests sont unitaires désormais.
@@ -48,7 +48,7 @@ Puis configurer le ( admin admin lors de la première installation, puis ajout d
 
     mvn sonar:sonar -Dsonar.projectKey=excilys:tondeuse -Dsonar.host.url=http://localhost:9000 -Dsonar.login=votre-tocken
 
-Les codes smells sont lié à l'usage de System.out.println dans la CLI. Pour remonter une erreur aux admins, on passe par des loggers.
+Les codes smells sont liés à l'usage de System.out.println dans la CLI. Pour remonter une erreur aux admins, on passe par des loggers.
 
 ## Logs
 
@@ -58,5 +58,5 @@ remonté à l'utilisateur et est ignoré lors du fonctionnement du programme
 
 ## Spring
 
-Spring a été utilisé dans ce projet pour faire de l'Injection de Dépendance et facilement utiliser les Mock dans les tests.
+Spring a été utilisé dans ce projet pour faire de l'Injection de Dépendances.
 
