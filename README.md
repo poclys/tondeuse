@@ -25,7 +25,7 @@ Contient les modèles de base du projet.
 Un point correspond à deux coordonnées.
 Il n'y a aucune intelligence dans les modèles hormis la gestion de nombre négatif qui n'ont aucune raison d'exister actuellement dans le projet.
 ### Exception
-Contient toutes les Exception du projet. J'ai laissé uniquement le constructeur avec un message pour forcer son utilisation.
+Contient toutes les Exceptions du projet. J'ai laissé uniquement le constructeur avec un message pour forcer son utilisation.
 ### Utils
 Contient toute l'intelligence du projet. Leur usage est indiqué en Javadoc.
 ### CLI
