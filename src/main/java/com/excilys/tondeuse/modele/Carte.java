@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Carte {
 
-  private List<Tondeuse> tondeuses;
+  private List<Tondeuse> tondeuses = new ArrayList<>();
   private int longueur;
   private int hauteur;
 
@@ -21,13 +21,11 @@ public class Carte {
     if (hauteur < 0) {
       throw new HauteurNegativeException();
     }
-    this.tondeuses = new ArrayList<>();
     this.longueur = longueur;
     this.hauteur = hauteur;
   }
 
   public Carte(Point point) {
-    this.tondeuses = new ArrayList<>();
     this.longueur = point.getX();
     this.hauteur = point.getY();
   }

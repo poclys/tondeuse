@@ -146,7 +146,7 @@ public class CLI {
     Carte result = carteUtils.initCarte(initialisationCarte);
 
     System.out.println(
-      "Entrez les coordonnées initiale de la tondeuse " +
+      "Entrez les coordonnées initiales de la tondeuse " +
       "( laissez vide si plus de tondeuse )"
     );
     String position = sin.nextLine();
@@ -167,7 +167,7 @@ public class CLI {
     ioUtils.lectureDeplacement(deplacement, tondeuse, carte);
     carte.getTondeuses().add(tondeuse);
     System.out.println(
-      "Entrez les coordonnées initiale de la tondeuse " +
+      "Entrez les coordonnées initiales de la tondeuse " +
       "( laissez vide si plus de tondeuse )"
     );
     position = sin.nextLine();
